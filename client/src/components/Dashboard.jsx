@@ -58,9 +58,7 @@ const fetchProducts = async()=>{
 
 try{
 
-const res = await axios.get(
-"http://localhost:5000/api/products"
-);
+const response = await axios.get("https://retailiq-ai.onrender.com/api/products");
 
 if(res.data.length > 0){
 setProducts(res.data);
