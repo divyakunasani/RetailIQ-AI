@@ -1,0 +1,100 @@
+import { useState } from "react";
+import axios from "axios";
+import { FaRobot, FaLightbulb, FaArrowUp } from "react-icons/fa";
+import { toast } from "react-toastify";
+
+function AIRecommendation() {
+  const [product, setProduct] = useState("");
+  const [recommendation, setRecommendation] = useState(null);
+  const [loading, setLoading] = useState(false);
+
+  const getRecommendation = async () => {
+    if (!product.trim()) {
+      toast.error("Enter a product name first");
+      return;
+    }
+
+    try {
+      setLoading(true);
+      const response = await axios.post(
+        "http://localhost:5000/api/pricing/recommend",
+        {
+          product,
+          category: "General",
+          costPrice: 100,
+          competitorPrice: 140,
+          demand: "Medium",
+          stock: 12
+        },
+        {
+          headers: {
+            Authorization: localStorage.getItem("retailiqToken") ? `Bearer ${localStorage.getItem("retailiqToken")}` : ""
+          }
+        }
+      );
+
+      setRecommendation(response.data);
+      toast.success("AI insight generated");
+    } catch (error) {
+      console.log(error);
+      toast.error("AI service error");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div className="mt-6 rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+      <div className="mb-5 flex items-center gap-3">
+        <FaRobot className="text-3xl text-purple-600" />
+        <div>
+          <h2 className="text-xl font-semibold text-slate-900">AI Price Recommendation</h2>
+          <p className="text-sm text-slate-500">Quick insight for a new product idea</p>
+        </div>
+      </div>
+
+      <div className="flex flex-col gap-3 sm:flex-row">
+        <input
+          type="text"
+          placeholder="Enter product name"
+          value={product}
+          onChange={(e) => setProduct(e.target.value)}
+          className="flex-1 rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 outline-none transition focus:border-blue-500 focus:bg-white"
+        />
+
+        <button
+          onClick={getRecommendation}
+          className="rounded-2xl bg-purple-600 px-6 py-3 font-semibold text-white transition hover:bg-purple-700"
+        >
+          {loading ? "Generating..." : "Generate"}
+        </button>
+      </div>
+
+      {loading && <p className="mt-5 text-sm text-slate-500">AI is analyzing market data...</p>}
+
+      {recommendation && (
+        <div className="mt-6 rounded-2xl bg-purple-50 p-5">
+          <div className="flex items-center gap-3">
+            <FaLightbulb className="text-2xl text-yellow-500" />
+            <h3 className="text-lg font-semibold text-slate-900">AI Suggestion</h3>
+          </div>
+
+          <p className="mt-3 text-sm text-slate-700">
+            Recommended Price: <strong className="text-green-600">₹ {recommendation.recommendedPrice}</strong>
+          </p>
+
+          <p className="mt-2 text-sm text-slate-700">
+            Expected Profit: <strong>{recommendation.expectedProfit}</strong>
+          </p>
+
+          <div className="mt-3 flex items-center gap-2 text-sm text-blue-600">
+            <FaArrowUp />
+            Market Trend: {recommendation.marketPosition}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+export default AIRecommendation;
