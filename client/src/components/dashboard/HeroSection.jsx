@@ -26,11 +26,11 @@ function HeroSection({
             AI Powered Retail Platform
           </p>
 
-          <h1 className="mt-3 text-5xl font-black text-slate-900">
-            RetailIQ.AI
-          </h1>
+          <h1 className="mt-3 text-5xl font-black text-white drop-shadow-lg">
+  🚀 RetailIQ.AI
+</h1>
 
-          <p className="mt-5 text-slate-600 max-w-2xl leading-7">
+         <p className="mt-5 text-slate-200 max-w-2xl leading-7 font-medium"> 
             Empower sellers with AI-driven pricing, inventory intelligence,
             demand forecasting and profit optimization from one unified
             dashboard.

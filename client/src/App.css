@@ -49,4 +49,23 @@ body,
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
+  /* RetailIQ Logo Visibility Fix */
+
+.logo-title {
+  color: #ffffff !important;
+  font-size: 32px;
+  font-weight: 800;
+}
+
+.hero-title {
+  color: #ffffff !important;
+  font-size: 48px;
+  font-weight: 900;
+}
+
+.hero-subtitle {
+  color: #e2e8f0 !important;
+  font-size: 18px;
+  font-weight: 600;
+}
 }

@@ -59,9 +59,8 @@ const fetchProducts = async()=>{
 try{
 
 const response = await axios.get("https://retailiq-ai.onrender.com/api/products");
-
-if(res.data.length > 0){
-setProducts(res.data);
+if(response.data.length > 0){
+setProducts(response.data);
 }
 
 }
@@ -140,9 +139,10 @@ return(
 className="
 min-h-screen
 bg-gradient-to-br
-from-slate-950
-via-blue-950
-to-slate-900
+from-slate-900
+via-blue-900
+to-indigo-900
+
 text-white
 p-6 md:p-10
 "
@@ -884,11 +884,13 @@ return(
 
 
 <div className="
-bg-black/20
+bg-white/10
+backdrop-blur-md
 rounded-xl
 p-5
 border
-border-white/10
+border-white/20
+shadow-lg
 ">
 
 
